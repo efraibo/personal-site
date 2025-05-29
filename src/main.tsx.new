@@ -1,0 +1,35 @@
+// filepath: /Users/evandro/Documents/DEV/personal-site/src/main.tsx
+// Import process shim first to ensure it's available before any Next.js imports
+import './process-shim.js';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './app/page';
+import './app/globals.css';
+
+// Define Next.js compatibility objects
+// This is ok to be global in this file since it's only executed once
+(window as any).Next = {
+  router: {
+    pathname: window.location.pathname,
+    asPath: window.location.pathname,
+    query: {},
+    events: {
+      on: () => {},
+      off: () => {},
+      emit: () => {},
+    },
+    push: (url: string) => { window.location.href = url; return Promise.resolve(true); },
+    replace: (url: string) => { window.location.replace(url); return Promise.resolve(true); },
+    reload: () => { window.location.reload(); },
+    back: () => { window.history.back(); },
+    prefetch: () => Promise.resolve(),
+    beforePopState: () => {},
+    isReady: true
+  }
+};
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);

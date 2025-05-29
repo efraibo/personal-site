@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Next.js to Vite Migration Debugger</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      color: #333;
+    }
+    h1 {
+      margin-bottom: 8px;
+      color: #0070f3;
+    }
+    h2 {
+      margin-top: 32px;
+      margin-bottom: 16px;
+      color: #333;
+      border-bottom: 1px solid #eaeaea;
+      padding-bottom: 8px;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .success {
+      color: #0070f3;
+      padding: 8px;
+      border-radius: 4px;
+      background-color: #e6f7ff;
+      border-left: 4px solid #0070f3;
+    }
+    .warning {
+      color: #d4b106;
+      padding: 8px;
+      border-radius: 4px;
+      background-color: #fffbe6;
+      border-left: 4px solid #d4b106;
+    }
+    .error {
+      color: #f5222d;
+      padding: 8px;
+      border-radius: 4px;
+      background-color: #fff1f0;
+      border-left: 4px solid #f5222d;
+    }
+    pre {
+      background-color: #f5f5f5;
+      padding: 8px;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 14px;
+    }
+    button {
+      background-color: #0070f3;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #005cc5;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #eaeaea;
+    }
+    th {
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+  <h1>Next.js to Vite Migration Debugger</h1>
+  <p>This tool helps diagnose issues when migrating from Next.js to Vite.</p>
+  
+  <div class="card">
+    <h2>Environment Check</h2>
+    <div id="env-check">Loading...</div>
+  </div>
+  
+  <div class="grid">
+    <div class="card">
+      <h2>Next.js Compatibility</h2>
+      <div id="next-compat">Loading...</div>
+    </div>
+    
+    <div class="card">
+      <h2>Vite Configuration</h2>
+      <div id="vite-config">Loading...</div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <h2>Component Tester</h2>
+    <p>Test specific Next.js components to verify they work with the shims:</p>
+    <div id="component-test">Loading...</div>
+  </div>
+  
+  <script>
+    // Environment check
+    function checkEnvironment() {
+      const envDiv = document.getElementById('env-check');
+      const checks = [
+        {
+          name: 'window.process',
+          test: () => typeof window.process !== 'undefined',
+          details: window.process
+        },
+        {
+          name: 'process.browser',
+          test: () => window.process && window.process.browser === true,
+          details: window.process ? window.process.browser : undefined
+        },
+        {
+          name: 'process.env',
+          test: () => window.process && typeof window.process.env === 'object',
+          details: window.process ? window.process.env : undefined
+        },
+        {
+          name: 'window.next',
+          test: () => typeof window.next !== 'undefined',
+          details: window.next
+        },
+        {
+          name: 'window.next.router',
+          test: () => window.next && typeof window.next.router === 'object',
+          details: window.next ? window.next.router : undefined
+        }
+      ];
+      
+      const results = checks.map(check => ({
+        ...check,
+        result: check.test()
+      }));
+      
+      let html = `
+        <table>
+          <tr>
+            <th>Check</th>
+            <th>Status</th>
+            <th>Details</th>
+          </tr>
+          ${results.map(item => `
+            <tr>
+              <td>${item.name}</td>
+              <td>${item.result ? 
+                '<span class="success">✓ Available</span>' : 
+                '<span class="error">✗ Missing</span>'}</td>
+              <td><pre>${item.result ? JSON.stringify(item.details, null, 2) : 'N/A'}</pre></td>
+            </tr>
+          `).join('')}
+        </table>
+      `;
+      
+      const overallStatus = results.every(r => r.result) ? 
+        '<p class="success">✓ All environment checks passed!</p>' :
+        '<p class="error">✗ Some environment checks failed. See details below.</p>';
+        
+      envDiv.innerHTML = overallStatus + html;
+    }
+    
+    // Next.js compatibility check
+    function checkNextCompat() {
+      const nextCompatDiv = document.getElementById('next-compat');
+      
+      try {
+        // Check for key Next.js features
+        const features = [
+          {
+            name: 'next/link shim',
+            test: () => {
+              try {
+                return fetch('/src/shims/next-link.jsx').then(r => r.status === 200);
+              } catch (e) {
+                return false;
+              }
+            }
+          },
+          {
+            name: 'next/router shim',
+            test: () => {
+              try {
+                return fetch('/src/shims/next-router.js').then(r => r.status === 200);
+              } catch (e) {
+                return false;
+              }
+            }
+          },
+          {
+            name: 'next/head shim',
+            test: () => {
+              try {
+                return fetch('/src/shims/next-head.jsx').then(r => r.status === 200);
+              } catch (e) {
+                return false;
+              }
+            }
+          },
+          {
+            name: 'next/image shim',
+            test: () => {
+              try {
+                return fetch('/src/shims/next-image.jsx').then(r => r.status === 200);
+              } catch (e) {
+                return false;
+              }
+            }
+          },
+          {
+            name: 'next/dynamic shim',
+            test: () => {
+              try {
+                return fetch('/src/shims/next-dynamic.jsx').then(r => r.status === 200);
+              } catch (e) {
+                return false;
+              }
+            }
+          }
+        ];
+        
+        nextCompatDiv.innerHTML = '<p>Checking for Next.js compatibility shims...</p>';
+        
+        // Run all tests in parallel
+        Promise.all(features.map(async feature => {
+          const result = await feature.test();
+          return {
+            name: feature.name,
+            result
+          };
+        })).then(results => {
+          let html = `
+            <table>
+              <tr>
+                <th>Feature</th>
+                <th>Status</th>
+              </tr>
+              ${results.map(item => `
+                <tr>
+                  <td>${item.name}</td>
+                  <td>${item.result ? 
+                    '<span class="success">✓ Available</span>' : 
+                    '<span class="error">✗ Missing</span>'}</td>
+                </tr>
+              `).join('')}
+            </table>
+          `;
+          
+          const overallStatus = results.every(r => r.result) ? 
+            '<p class="success">✓ All Next.js compatibility shims found!</p>' :
+            '<p class="warning">⚠️ Some Next.js compatibility shims are missing.</p>';
+            
+          nextCompatDiv.innerHTML = overallStatus + html;
+        });
+      } catch (e) {
+        nextCompatDiv.innerHTML = `<p class="error">Error checking Next.js compatibility: ${e.message}</p>`;
+      }
+    }
+    
+    // Vite config check
+    function checkViteConfig() {
+      const viteConfigDiv = document.getElementById('vite-config');
+      
+      try {
+        fetch('/vite.config.js')
+          .then(response => response.text())
+          .then(text => {
+            const configChecks = [
+              {
+                name: 'next/link alias',
+                test: () => text.includes("'next/link'") && text.includes('next-link.jsx'),
+              },
+              {
+                name: 'next/router alias',
+                test: () => text.includes("'next/router'") && text.includes('next-router.js'),
+              },
+              {
+                name: 'next/head alias',
+                test: () => text.includes("'next/head'") && text.includes('next-head.jsx'),
+              },
+              {
+                name: 'next/image alias',
+                test: () => text.includes("'next/image'") && text.includes('next-image.jsx'),
+              },
+              {
+                name: 'process.env define',
+                test: () => text.includes('process.env') && text.includes('define'),
+              }
+            ];
+            
+            const results = configChecks.map(check => ({
+              name: check.name,
+              result: check.test()
+            }));
+            
+            let html = `
+              <table>
+                <tr>
+                  <th>Configuration</th>
+                  <th>Status</th>
+                </tr>
+                ${results.map(item => `
+                  <tr>
+                    <td>${item.name}</td>
+                    <td>${item.result ? 
+                      '<span class="success">✓ Configured</span>' : 
+                      '<span class="warning">⚠️ Not found</span>'}</td>
+                  </tr>
+                `).join('')}
+              </table>
+            `;
+            
+            const overallStatus = results.every(r => r.result) ? 
+              '<p class="success">✓ Vite configuration looks good!</p>' :
+              '<p class="warning">⚠️ Some Vite configuration settings may be missing.</p>';
+              
+            viteConfigDiv.innerHTML = overallStatus + html;
+          })
+          .catch(err => {
+            viteConfigDiv.innerHTML = `<p class="error">Error loading Vite config: ${err.message}</p>`;
+          });
+      } catch (e) {
+        viteConfigDiv.innerHTML = `<p class="error">Error checking Vite config: ${e.message}</p>`;
+      }
+    }
+    
+    // Component tester
+    function setupComponentTester() {
+      const testDiv = document.getElementById('component-test');
+      
+      testDiv.innerHTML = `
+        <div>
+          <button onclick="testRouter()">Test Router</button>
+          <button onclick="testHead()">Test Head</button>
+          <button onclick="testLink()">Test Link</button>
+          <div id="test-results" class="card" style="margin-top:16px; display:none;"></div>
+        </div>
+      `;
+      
+      // Define test functions globally
+      window.testRouter = function() {
+        const resultDiv = document.getElementById('test-results');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = '<p>Testing Next.js Router...</p>';
+        
+        setTimeout(() => {
+          try {
+            const testItems = [
+              {
+                name: 'window.next.router',
+                result: !!window.next?.router,
+                details: window.next?.router
+              },
+              {
+                name: 'pathname',
+                result: typeof window.next?.router?.pathname === 'string',
+                details: window.next?.router?.pathname
+              },
+              {
+                name: 'push method',
+                result: typeof window.next?.router?.push === 'function',
+                details: 'Function exists'
+              }
+            ];
+            
+            let html = `
+              <h3>Router Test Results</h3>
+              <table>
+                <tr>
+                  <th>Check</th>
+                  <th>Status</th>
+                  <th>Details</th>
+                </tr>
+                ${testItems.map(item => `
+                  <tr>
+                    <td>${item.name}</td>
+                    <td>${item.result ? 
+                      '<span class="success">✓ Pass</span>' : 
+                      '<span class="error">✗ Fail</span>'}</td>
+                    <td><pre>${item.result && item.details ? 
+                      (typeof item.details === 'object' ? 
+                        JSON.stringify(item.details, null, 2) : item.details) : 
+                      'N/A'}</pre></td>
+                  </tr>
+                `).join('')}
+              </table>
+            `;
+            
+            resultDiv.innerHTML = html;
+          } catch (e) {
+            resultDiv.innerHTML = `<p class="error">Error testing router: ${e.message}</p>`;
+          }
+        }, 100);
+      };
+      
+      window.testHead = function() {
+        const resultDiv = document.getElementById('test-results');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = '<p>Testing Next.js Head...</p>';
+        
+        // Try to dynamically add some elements to head
+        try {
+          // Create a unique ID for this test
+          const testId = `head-test-${Date.now()}`;
+          
+          // Create a script element to inject
+          const script = document.createElement('script');
+          script.id = testId;
+          script.textContent = `
+            // This is a test script
+            window.nextHeadTestResult = true;
+          `;
+          document.head.appendChild(script);
+          
+          // Check if the script was added
+          setTimeout(() => {
+            const testItems = [
+              {
+                name: 'Script injection',
+                result: !!document.getElementById(testId),
+                details: 'Script element added to head'
+              },
+              {
+                name: 'Script execution',
+                result: window.nextHeadTestResult === true,
+                details: window.nextHeadTestResult
+              }
+            ];
+            
+            let html = `
+              <h3>Head Test Results</h3>
+              <table>
+                <tr>
+                  <th>Check</th>
+                  <th>Status</th>
+                  <th>Details</th>
+                </tr>
+                ${testItems.map(item => `
+                  <tr>
+                    <td>${item.name}</td>
+                    <td>${item.result ? 
+                      '<span class="success">✓ Pass</span>' : 
+                      '<span class="error">✗ Fail</span>'}</td>
+                    <td><pre>${item.result && item.details ? 
+                      (typeof item.details === 'object' ? 
+                        JSON.stringify(item.details, null, 2) : item.details) : 
+                      'N/A'}</pre></td>
+                  </tr>
+                `).join('')}
+              </table>
+            `;
+            
+            resultDiv.innerHTML = html;
+            
+            // Clean up
+            try {
+              document.head.removeChild(script);
+              delete window.nextHeadTestResult;
+            } catch (e) {}
+          }, 300);
+        } catch (e) {
+          resultDiv.innerHTML = `<p class="error">Error testing head: ${e.message}</p>`;
+        }
+      };
+      
+      window.testLink = function() {
+        const resultDiv = document.getElementById('test-results');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = '<p>Testing Next.js Link...</p>';
+        
+        // Create a link
+        try {
+          // Add test link to the page
+          const testId = `link-test-${Date.now()}`;
+          const linkContainer = document.createElement('div');
+          linkContainer.id = testId;
+          linkContainer.innerHTML = `
+            <a href="#test-link" class="test-next-link">Test Link</a>
+          `;
+          document.body.appendChild(linkContainer);
+          
+          setTimeout(() => {
+            const testItems = [
+              {
+                name: 'Link rendering',
+                result: !!document.querySelector(`#${testId} a`),
+                details: 'Link element created'
+              },
+              {
+                name: 'Link attributes',
+                result: document.querySelector(`#${testId} a`).getAttribute('href') === '#test-link',
+                details: document.querySelector(`#${testId} a`).getAttribute('href')
+              }
+            ];
+            
+            let html = `
+              <h3>Link Test Results</h3>
+              <table>
+                <tr>
+                  <th>Check</th>
+                  <th>Status</th>
+                  <th>Details</th>
+                </tr>
+                ${testItems.map(item => `
+                  <tr>
+                    <td>${item.name}</td>
+                    <td>${item.result ? 
+                      '<span class="success">✓ Pass</span>' : 
+                      '<span class="error">✗ Fail</span>'}</td>
+                    <td><pre>${item.result && item.details ? 
+                      (typeof item.details === 'object' ? 
+                        JSON.stringify(item.details, null, 2) : item.details) : 
+                      'N/A'}</pre></td>
+                  </tr>
+                `).join('')}
+              </table>
+            `;
+            
+            resultDiv.innerHTML = html;
+            
+            // Clean up
+            try {
+              document.body.removeChild(linkContainer);
+            } catch (e) {}
+          }, 300);
+        } catch (e) {
+          resultDiv.innerHTML = `<p class="error">Error testing link: ${e.message}</p>`;
+        }
+      };
+    }
+    
+    // Run all checks when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      checkEnvironment();
+      checkNextCompat();
+      checkViteConfig();
+      setupComponentTester();
+    });
+  </script>
+</body>
+</html>
