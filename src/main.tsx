@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import App from './app/page';
 import './app/globals.css';
 import ErrorBoundary from './components/ErrorBoundary';
+import { LanguageProvider } from './contexts/LanguageContext';
 
 // Next.js compatibility is now handled by the imported next-compat.js
 
@@ -14,7 +15,9 @@ console.log('[Vite App] Starting application with Next.js compatibility layer');
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <App />
+      <LanguageProvider>
+        <App />
+      </LanguageProvider>
     </ErrorBoundary>
   </React.StrictMode>
 );
