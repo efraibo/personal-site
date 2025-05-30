@@ -60,7 +60,7 @@ const debugDynamicTitle = {
     
     // Reload the script to force reinitialization
     const script = document.createElement('script');
-    script.src = '/dynamic-title.js';
+    script.src = './dynamic-title.js';
     script.onload = () => console.log('Dynamic title script reloaded');
     document.head.appendChild(script);
   }
