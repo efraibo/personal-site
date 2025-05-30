@@ -49,8 +49,14 @@ export default defineConfig({
       'next/dynamic': path.resolve(__dirname, './src/shims/next-dynamic.jsx'),
     },
   },
-  // Serve at base path
-  base: '/',
+    // Configure base path for GitHub Pages
+  base: process.env.NODE_ENV === 'production' ? '/personal-site/' : '/',
+  // Build configuration
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+  },
   // Server options
   server: {
     port: 3000,

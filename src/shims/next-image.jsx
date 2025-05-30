@@ -26,7 +26,7 @@ const Image = ({
       src={src} 
       alt={alt || ''} 
       style={imgStyle} 
-      loading={loading || priority ? 'eager' : 'lazy'}
+      loading={(loading || priority) ? 'eager' : 'lazy'}
       {...props} 
     />
   );

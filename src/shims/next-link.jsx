@@ -72,5 +72,6 @@ const Link = ({
       {children}
     </a>
   );
+}
 
 export default Link;

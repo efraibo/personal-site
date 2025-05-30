@@ -17,7 +17,8 @@ export default function handleModuleResolution() {
       
       // Return a shim path for Next.js modules that we don't have explicit shims for
       if (nextJsModules.includes(id)) {
-        return { id: '/src/shims/empty-module.js', external: false };
+        const path = require('path');
+        return { id: path.resolve(__dirname, '../../src/shims/empty-module.js'), external: false };
       }
       
       return null; // Let Vite handle other imports

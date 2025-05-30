@@ -23,7 +23,7 @@ interface NextCompatibility {
 
 declare global {
   interface Window {
-    Next?: NextCompatibility;
+    next?: NextCompatibility;
     process?: {
       env: Record<string, string | boolean>;
       browser: boolean;
