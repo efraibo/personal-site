@@ -7,7 +7,7 @@ export default function Hero() {
   const { t } = useLanguage();
   
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
+    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
       {/* Background with animated gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10"></div>

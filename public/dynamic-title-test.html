@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evandro Nascimento - Software Developer & Tech Lead</title>
+  <script defer src="./dynamic-title.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      scroll-margin-top: 0;
+    }
+    #hero { background-color: #e6f7ff; }
+    #sobre { background-color: #f0f5ff; }
+    #experiencia { background-color: #f9f0ff; }
+    #skills { background-color: #fff7e6; }
+    #educacao { background-color: #fff1f0; }
+    #contato { background-color: #f6ffed; }
+    .nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: white;
+      padding: 1rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .nav a {
+      text-decoration: none;
+      color: #1890ff;
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    p {
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <a href="#hero">Home</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#experiencia">Experiência</a>
+    <a href="#skills">Skills</a>
+    <a href="#educacao">Educação</a>
+    <a href="#contato">Contato</a>
+  </div>
+
+  <section id="hero">
+    <div>
+      <h1>Hero Section</h1>
+      <p>This should set title to "Home - Evandro Nascimento"</p>
+    </div>
+  </section>
+
+  <section id="sobre">
+    <div>
+      <h1>Sobre Section</h1>
+      <p>This should set title to "Sobre Mim - Evandro Nascimento"</p>
+    </div>
+  </section>
+
+  <section id="experiencia">
+    <div>
+      <h1>Experiência Section</h1>
+      <p>This should set title to "Experiência - Evandro Nascimento"</p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div>
+      <h1>Skills Section</h1>
+      <p>This should set title to "Habilidades - Evandro Nascimento"</p>
+    </div>
+  </section>
+
+  <section id="educacao">
+    <div>
+      <h1>Educação Section</h1>
+      <p>This should set title to "Educação - Evandro Nascimento"</p>
+    </div>
+  </section>
+
+  <section id="contato">
+    <div>
+      <h1>Contato Section</h1>
+      <p>This should set title to "Contato - Evandro Nascimento"</p>
+    </div>
+  </section>
+
+  <script>
+    // Add smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+    
+    // Log when sections enter viewport
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          console.log(`Section ${entry.target.id} is now visible`);
+        }
+      });
+    }, { threshold: 0.5 });
+    
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+</body>
+</html>
