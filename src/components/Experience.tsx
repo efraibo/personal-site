@@ -1,40 +1,64 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage, Language } from '@/contexts/LanguageContext';
+
+interface MonthYear {
+  year: number;
+  month: number; // 1-12
+}
+
+function formatMonthYear(date: MonthYear, language: Language): string {
+  const locale = language === 'en' ? 'en-US' : 'pt-BR';
+  const month = new Intl.DateTimeFormat(locale, { month: 'long' }).format(
+    new Date(date.year, date.month - 1, 1)
+  );
+  return `${month.charAt(0).toUpperCase()}${month.slice(1)} ${date.year}`;
+}
+
+function formatPeriod(
+  start: MonthYear,
+  end: MonthYear | undefined,
+  language: Language,
+  presentLabel: string
+): string {
+  const startLabel = formatMonthYear(start, language);
+  const endLabel = end ? formatMonthYear(end, language) : presentLabel;
+  return `${startLabel} - ${endLabel}`;
+}
 
 export default function Experience() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   const experiences = [
     {
       title: "Developer Specialist",
       company: "Grupo Boticário",
-      period: `Abril 2024 - ${t('experience.present')}`,
+      period: formatPeriod({ year: 2024, month: 4 }, undefined, language, t('experience.present')),
       description: t('exp.boticario.desc')
     },
     {
       title: "Tech Lead",
       company: "Cesar",
-      period: "Agosto 2022 - Fevereiro 2024",
+      period: formatPeriod({ year: 2022, month: 8 }, { year: 2024, month: 2 }, language, t('experience.present')),
       description: t('exp.cesar1.desc')
     },
     {
       title: "Software Engineer",
       company: "Itaú Unibanco",
-      period: "Março 2022 - Agosto 2022",
+      period: formatPeriod({ year: 2022, month: 3 }, { year: 2022, month: 8 }, language, t('experience.present')),
       description: t('exp.itau.desc')
     },
     {
       title: "Tech Lead / Software Engineer",
       company: "Cesar",
-      period: "Junho 2020 - Março 2022",
+      period: formatPeriod({ year: 2020, month: 6 }, { year: 2022, month: 3 }, language, t('experience.present')),
       description: t('exp.cesar2.desc')
     },
     {
       title: "Systems Analyst",
       company: "Cast Group",
-      period: "Fevereiro 2019 - Junho 2020",
+      period: formatPeriod({ year: 2019, month: 2 }, { year: 2020, month: 6 }, language, t('experience.present')),
       description: t('exp.cast.desc')
     }
   ];
@@ -45,7 +69,7 @@ export default function Experience() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
           viewport={{ once: true }}
           className="max-w-4xl mx-auto"
         >
@@ -59,7 +83,7 @@ export default function Experience() {
                 key={`${exp.company}-${exp.title}`}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.3 }}
                 viewport={{ once: true }}
                 className="bg-white p-6 rounded-lg shadow-md"
               >
