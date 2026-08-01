@@ -25,8 +25,8 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <motion.h1 
-              className="text-5xl md:text-7xl lg:text-8xl font-bold text-gray-900 leading-tight"
+            <motion.h1
+              className="text-[clamp(2.25rem,6vw+1rem,6rem)] font-bold text-gray-900 leading-tight break-words"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, ease: "easeOut" }}
