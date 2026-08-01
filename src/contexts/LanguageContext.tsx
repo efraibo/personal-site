@@ -123,7 +123,10 @@ const translations = {
     'skills.experience': 'Anos Experiência',
     'skills.projects': 'Projetos',
     'skills.companies': 'Empresas',
-    
+    'skills.level.advanced': 'Avançado',
+    'skills.level.intermediate': 'Intermediário',
+    'skills.level.basic': 'Básico',
+
     // Experience Section
     'experience.title': 'Experiência',
     'experience.titleHighlight': 'Profissional',
@@ -232,7 +235,10 @@ const translations = {
     'skills.experience': 'Years Experience',
     'skills.projects': 'Projects',
     'skills.companies': 'Companies',
-    
+    'skills.level.advanced': 'Advanced',
+    'skills.level.intermediate': 'Intermediate',
+    'skills.level.basic': 'Basic',
+
     // Experience Section
     'experience.title': 'Professional',
     'experience.titleHighlight': 'Experience',

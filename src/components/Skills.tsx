@@ -6,18 +6,23 @@ import { useLanguage } from '@/contexts/LanguageContext';
 export default function Skills() {
   const { t } = useLanguage();
   
-  const skillCategories = [
+  const skillCategories: {
+    title: string;
+    icon: string;
+    gradient: string;
+    skills: { name: string; level: 'advanced' | 'intermediate' | 'basic' }[];
+  }[] = [
     {
       title: t('skills.languages'),
       icon: "💻",
       gradient: "from-blue-500 to-blue-600",
       skills: [
-        { name: "Java", level: 95 },
-        { name: "Kotlin", level: 90 },
-        { name: "C#", level: 88 },
-        { name: "JavaScript", level: 85 },
-        { name: "TypeScript", level: 82 },
-        { name: "Python", level: 75 }
+        { name: "Java", level: "advanced" },
+        { name: "Kotlin", level: "advanced" },
+        { name: "C#", level: "intermediate" },
+        { name: "JavaScript", level: "intermediate" },
+        { name: "TypeScript", level: "intermediate" },
+        { name: "Python", level: "basic" }
       ]
     },
     {
@@ -25,12 +30,12 @@ export default function Skills() {
       icon: "⚙️",
       gradient: "from-purple-500 to-purple-600",
       skills: [
-        { name: "Spring Boot", level: 95 },
-        { name: "Spring WebFlux", level: 88 },
-        { name: "Dotnet Core", level: 90 },
-        { name: "Entity Framework", level: 85 },
-        { name: "Spring Security", level: 85 },
-        { name: "Dapper", level: 80 }
+        { name: "Spring Boot", level: "advanced" },
+        { name: "Spring WebFlux", level: "intermediate" },
+        { name: "Dotnet Core", level: "advanced" },
+        { name: "Entity Framework", level: "intermediate" },
+        { name: "Spring Security", level: "intermediate" },
+        { name: "Dapper", level: "intermediate" }
       ]
     },
     {
@@ -38,12 +43,12 @@ export default function Skills() {
       icon: "🎨",
       gradient: "from-green-500 to-green-600",
       skills: [
-        { name: "Angular", level: 90 },
-        { name: "React", level: 85 },
-        { name: "Next.js", level: 80 },
-        { name: "TypeScript", level: 88 },
-        { name: "HTML5", level: 92 },
-        { name: "CSS3", level: 85 }
+        { name: "Angular", level: "advanced" },
+        { name: "React", level: "intermediate" },
+        { name: "Next.js", level: "intermediate" },
+        { name: "TypeScript", level: "intermediate" },
+        { name: "HTML5", level: "advanced" },
+        { name: "CSS3", level: "intermediate" }
       ]
     },
     {
@@ -51,12 +56,12 @@ export default function Skills() {
       icon: "🗄️",
       gradient: "from-orange-500 to-orange-600",
       skills: [
-        { name: "MongoDB", level: 88 },
-        { name: "PostgreSQL", level: 90 },
-        { name: "Oracle", level: 85 },
-        { name: "DB2", level: 80 },
-        { name: "SQL Server", level: 85 },
-        { name: "H2", level: 75 }
+        { name: "MongoDB", level: "intermediate" },
+        { name: "PostgreSQL", level: "advanced" },
+        { name: "Oracle", level: "intermediate" },
+        { name: "DB2", level: "intermediate" },
+        { name: "SQL Server", level: "intermediate" },
+        { name: "H2", level: "basic" }
       ]
     },
     {
@@ -64,12 +69,12 @@ export default function Skills() {
       icon: "☁️",
       gradient: "from-indigo-500 to-indigo-600",
       skills: [
-        { name: "Docker", level: 90 },
-        { name: "AWS", level: 85 },
-        { name: "PCF", level: 82 },
-        { name: "CI/CD", level: 88 },
-        { name: "GitLab", level: 85 },
-        { name: "New Relic", level: 75 }
+        { name: "Docker", level: "advanced" },
+        { name: "AWS", level: "intermediate" },
+        { name: "PCF", level: "intermediate" },
+        { name: "CI/CD", level: "intermediate" },
+        { name: "GitLab", level: "intermediate" },
+        { name: "New Relic", level: "basic" }
       ]
     },
     {
@@ -77,15 +82,21 @@ export default function Skills() {
       icon: "📋",
       gradient: "from-pink-500 to-pink-600",
       skills: [
-        { name: "Agile", level: 95 },
-        { name: "TDD/BDD", level: 88 },
-        { name: "SonarQube", level: 85 },
-        { name: "Checkmarx", level: 80 },
-        { name: "Unit Testing", level: 90 },
-        { name: "Code Quality", level: 92 }
+        { name: "Agile", level: "advanced" },
+        { name: "TDD/BDD", level: "intermediate" },
+        { name: "SonarQube", level: "intermediate" },
+        { name: "Checkmarx", level: "intermediate" },
+        { name: "Unit Testing", level: "advanced" },
+        { name: "Code Quality", level: "advanced" }
       ]
     }
   ];
+
+  const levelBadgeStyles: Record<'advanced' | 'intermediate' | 'basic', string> = {
+    advanced: 'bg-blue-100 text-blue-700',
+    intermediate: 'bg-purple-100 text-purple-700',
+    basic: 'bg-gray-100 text-gray-600'
+  };
 
   return (
     <section id="skills" className="py-24 bg-gray-50">
@@ -93,26 +104,26 @@ export default function Skills() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4 }}
           viewport={{ once: true }}
           className="max-w-7xl mx-auto"
         >
           {/* Header */}
           <div className="text-center mb-16">
-            <motion.h2 
+            <motion.h2
               className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.3 }}
               viewport={{ once: true }}
             >
               {t('skills.title')} <span className="gradient-text">{t('skills.titleHighlight')}</span>
             </motion.h2>
-            <motion.p 
+            <motion.p
               className="text-xl text-gray-600 max-w-3xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
               viewport={{ once: true }}
             >
               {t('skills.description')}
@@ -126,7 +137,7 @@ export default function Skills() {
                 key={category.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
+                transition={{ duration: 0.3, delay: Math.min(categoryIndex * 0.05, 0.25) }}
                 viewport={{ once: true }}
                 className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group hover:-translate-y-2"
               >
@@ -141,29 +152,20 @@ export default function Skills() {
                 </div>
 
                 {/* Skills List */}
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {category.skills.map((skill, skillIndex) => (
                     <motion.div
                       key={skill.name}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: skillIndex * 0.05 }}
+                      transition={{ duration: 0.4, delay: Math.min(skillIndex * 0.03, 0.15) }}
                       viewport={{ once: true }}
-                      className="group/skill"
+                      className="flex justify-between items-center"
                     >
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-gray-700 font-medium">{skill.name}</span>
-                        <span className="text-sm text-gray-500">{skill.level}%</span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                        <motion.div
-                          className={`h-2 bg-gradient-to-r ${category.gradient} rounded-full`}
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          transition={{ duration: 1, delay: skillIndex * 0.1 }}
-                          viewport={{ once: true }}
-                        />
-                      </div>
+                      <span className="text-gray-700 font-medium">{skill.name}</span>
+                      <span className={`text-xs font-medium px-3 py-1 rounded-full ${levelBadgeStyles[skill.level]}`}>
+                        {t(`skills.level.${skill.level}`)}
+                      </span>
                     </motion.div>
                   ))}
                 </div>
@@ -175,7 +177,7 @@ export default function Skills() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            transition={{ duration: 0.4, delay: 0.25 }}
             viewport={{ once: true }}
             className="mt-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white"
           >
