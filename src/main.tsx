@@ -2,6 +2,7 @@
 import './shims/next-compat.js';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { MotionConfig } from 'framer-motion';
 import App from './app/page';
 import './app/globals.css';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -16,7 +17,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ErrorBoundary>
       <LanguageProvider>
-        <App />
+        <MotionConfig reducedMotion="user">
+          <App />
+        </MotionConfig>
       </LanguageProvider>
     </ErrorBoundary>
   </React.StrictMode>
