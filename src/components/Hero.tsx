@@ -23,31 +23,31 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
           >
             <motion.h1
               className="text-[clamp(2.25rem,6vw+1rem,6rem)] font-bold text-gray-900 leading-tight break-words"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, ease: "easeOut" }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               {t('hero.title').split(' ')[0]} <span className="gradient-text">{t('hero.title').split(' ')[1]}</span>
             </motion.h1>
             
-            <motion.h2 
+            <motion.h2
               className="text-2xl md:text-4xl lg:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 mt-6 font-semibold"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
             >
               {t('hero.subtitle')}
             </motion.h2>
             
-            <motion.div 
+            <motion.div
               className="flex flex-wrap justify-center gap-3 mt-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
             >
               {['Java', 'Kotlin', 'C#', 'Spring', 'Dotnet'].map((tech, index) => (
                 <span 
@@ -60,11 +60,11 @@ export default function Hero() {
               ))}
             </motion.div>
             
-            <motion.p 
+            <motion.p
               className="text-lg text-gray-600 mt-4 flex items-center justify-center gap-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
             >
               <svg className="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
@@ -76,7 +76,7 @@ export default function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
             className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed"
             dangerouslySetInnerHTML={{ __html: t('hero.description') }}
           />
@@ -84,7 +84,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
             className="flex flex-col sm:flex-row justify-center gap-4 pt-8"
           >
             <motion.a

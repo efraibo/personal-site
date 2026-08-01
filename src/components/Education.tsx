@@ -46,7 +46,7 @@ export default function Education() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
           viewport={{ once: true }}
           className="max-w-4xl mx-auto"
         >
@@ -64,7 +64,7 @@ export default function Education() {
                     key={`${edu.institution}-${edu.degree}`}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: 0.3 }}
                     viewport={{ once: true }}
                     className="bg-white p-6 rounded-lg shadow-md"
                   >
@@ -83,7 +83,7 @@ export default function Education() {
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.3 }}
                 viewport={{ once: true }}
                 className="bg-white p-6 rounded-lg shadow-md"
               >
@@ -110,7 +110,7 @@ export default function Education() {
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
                   viewport={{ once: true }}
                   className="bg-white p-6 rounded-lg shadow-md"
                 >
