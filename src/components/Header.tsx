@@ -23,6 +23,7 @@ export default function Header() {
   const navItems = [
     { href: "#sobre", label: t('nav.about') },
     { href: "#experiencia", label: t('nav.experience') },
+    { href: "#projetos", label: t('nav.projects') },
     { href: "#skills", label: t('nav.skills') },
     { href: "#educacao", label: t('nav.education') },
     { href: "#contato", label: t('nav.contact') }
@@ -32,7 +33,7 @@ export default function Header() {
     <motion.header 
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.3 }}
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled 
           ? 'bg-white/80 backdrop-blur-lg shadow-lg border-b border-gray-200/20' 
@@ -63,10 +64,10 @@ export default function Header() {
                 key={item.href}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.3, delay: Math.min(index * 0.05, 0.25) }}
               >
-                <Link 
-                  href={item.href} 
+                <Link
+                  href={item.href}
                   className="relative text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300 group"
                 >
                   {item.label}
@@ -79,7 +80,7 @@ export default function Header() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              transition={{ duration: 0.3, delay: 0.25 }}
             >
               <LanguageSelector />
             </motion.div>
@@ -127,7 +128,7 @@ export default function Header() {
                 key={item.href}
                 initial={{ opacity: 0, x: -20 }}
                 animate={isMenuOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
+                transition={{ duration: 0.3, delay: Math.min(index * 0.05, 0.25) }}
               >
                 <Link
                   href={item.href}

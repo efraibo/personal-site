@@ -82,6 +82,7 @@ const translations = {
     'nav.skills': 'Skills',
     'nav.education': 'Educação',
     'nav.contact': 'Contato',
+    'nav.projects': 'Projetos',
     'nav.portfolio': 'Portfolio',
     
     // Hero Section
@@ -159,6 +160,8 @@ const translations = {
     'projects.title': 'Projetos',
     'projects.titleHighlight': 'Destacados',
     'projects.description': 'Alguns dos principais projetos desenvolvidos ao longo da minha carreira',
+    'projects.viewRepo': 'Ver Repositório',
+    'projects.viewDemo': 'Ver Demo',
 
     // Experience descriptions in Portuguese
     'exp.boticario.desc': 'Trabalho como especialista no desenvolvimento de soluções tecnológicas robustas e escaláveis, usando uma abordagem prática e versátil com tecnologias de ponta. Focado em microsserviços, projeto e implemento sistemas de alto desempenho, resilientes e sustentáveis, principalmente usando Kotlin e Java com frameworks como Spring Boot e WebFlux.',
@@ -194,6 +197,7 @@ const translations = {
     'nav.skills': 'Skills',
     'nav.education': 'Education',
     'nav.contact': 'Contact',
+    'nav.projects': 'Projects',
     'nav.portfolio': 'Portfolio',
     
     // Hero Section
@@ -271,6 +275,8 @@ const translations = {
     'projects.title': 'Featured',
     'projects.titleHighlight': 'Projects',
     'projects.description': 'Some of the main projects developed throughout my career',
+    'projects.viewRepo': 'View Repository',
+    'projects.viewDemo': 'View Demo',
 
     // Experience descriptions in English
     'exp.boticario.desc': 'I work as a specialist in developing robust and scalable technological solutions, using a practical and versatile approach with cutting-edge technologies. Focused on microservices, I design and implement high-performance, resilient and sustainable systems, mainly using Kotlin and Java with frameworks like Spring Boot and WebFlux.',

@@ -49,6 +49,7 @@ export default function Footer() {
   const quickLinks = [
     { name: t('nav.about'), href: '#sobre' },
     { name: t('nav.experience'), href: '#experiencia' },
+    { name: t('nav.projects'), href: '#projetos' },
     { name: t('nav.skills'), href: '#skills' },
     { name: t('nav.education'), href: '#educacao' },
     { name: t('nav.contact'), href: '#contato' }
@@ -62,7 +63,7 @@ export default function Footer() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.3 }}
             viewport={{ once: true }}
             className="col-span-1"
           >
@@ -100,7 +101,7 @@ export default function Footer() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
             viewport={{ once: true }}
             className="col-span-1"
           >
@@ -123,7 +124,7 @@ export default function Footer() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
             viewport={{ once: true }}
             className="col-span-1"
           >
@@ -161,7 +162,7 @@ export default function Footer() {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
           viewport={{ once: true }}
           className="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center"
         >
